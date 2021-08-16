@@ -14,6 +14,9 @@ import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
+//Если вам нужно Меню только на конкретных экранах, то Тему всего приложения необходимо
+//устанавливать как NoActionBar и на каждом конкретном экране добавлять в макет свой AppBar.
+
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar supportActionBar;
@@ -28,12 +31,15 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
+    private void initPopupMenu() {
+    }
+
     private void initView() {
         initToolBar();
     }
 
     private void initToolBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+       Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 

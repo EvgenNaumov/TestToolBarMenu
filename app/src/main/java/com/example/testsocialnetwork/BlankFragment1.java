@@ -1,6 +1,7 @@
 package com.example.testsocialnetwork;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -72,6 +75,47 @@ public class BlankFragment1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         InitView(view);
+        iniPopupMenu(view);
+    }
+
+    private void iniPopupMenu(View view) {
+        TextView textView1 = view.findViewById(R.id.text1_fragment);
+        textView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = requireActivity();
+                PopupMenu popupMenu = new PopupMenu(activity,v);
+
+                activity.getMenuInflater().inflate(R.menu.popup,popupMenu.getMenu());
+
+                //*****добавим еще один пункт меню динамически*****
+                Menu menu = popupMenu.getMenu();
+                menu.findItem(R.id.item1_popup).setVisible(false);
+                menu.add(0, 123456, 12, R.string.new_menu_item_added);
+                //****добавим еще один пункт меню динамически*****
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int itemId = item.getItemId();
+                        switch (itemId){
+                            case R.id.item1_popup:
+                                Toast.makeText(getContext(), "popup 1", Toast.LENGTH_SHORT).show();
+                                return true;
+                            case R.id.item2_popup:
+                                Toast.makeText(getContext(), "popup 2", Toast.LENGTH_SHORT).show();
+                                return true;
+                            case 123456:
+                                Toast.makeText(getContext(),"new menu",Toast.LENGTH_SHORT).show();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+
+            }
+        });
     }
 
     @Override
